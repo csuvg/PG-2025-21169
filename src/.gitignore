@@ -1,0 +1,16 @@
+venv/
+.venv/
+*.pyc
+.env
+.idea/
+.pytest_cache/
+tests/__pycache__
+.vscode/
+certs/**/*.key
+certs/**/*.p12
+*.pem
+*.pfx
+*.dump
+*.sql
+.coverage
+/comandos.txt

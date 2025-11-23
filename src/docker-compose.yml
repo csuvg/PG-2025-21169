@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: agroforms_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PGUSER:-agro}
+      POSTGRES_PASSWORD: ${PGPASSWORD:-agro_pwd}
+      POSTGRES_DB: ${PGDATABASE:-agroforms}
+    ports:
+      - "${PGPORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Si quieres crear extensiones/índices al inicio, monta un init script:
+      # - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PGUSER:-agro} -d ${PGDATABASE:-agroforms}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
